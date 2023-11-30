@@ -28,7 +28,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         List<RestaurantDTO> restaurantsDTOs = new ArrayList<>();
 
         for (Restaurant restaurant : restaurantsEntities) {
-            restaurantsDTOs.add(new RestaurantDTO(restaurant.getId(), restaurant.getName()));
+            restaurantsDTOs.add(new RestaurantDTO(restaurant.getId(), restaurant.getName(), restaurant.getAddress(), restaurant.getPhone(), restaurant.getEmail()));
         }
 
         return restaurantsDTOs;
@@ -43,6 +43,6 @@ public class RestaurantServiceImpl implements RestaurantService {
             menu.add(new FoodItemDTO(foodItem.getId(), foodItem.getName(), foodItem.getPrice()));
         }
 
-        return new RestaurantDTO(restaurant.getId(), restaurant.getName(), menu);
+        return new RestaurantDTO(restaurant.getId(), restaurant.getName(), restaurant.getAddress(), restaurant.getPhone(), restaurant.getEmail() , menu);
     }
 }

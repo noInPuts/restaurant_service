@@ -8,11 +8,30 @@ public class RestaurantDTO {
 
     private List<FoodItemDTO> menu;
 
+    private String address;
+
+    private String phone;
+
+    private String email;
+
     public RestaurantDTO() {
     }
 
-    public RestaurantDTO(String name) {
+    public RestaurantDTO(Long id, String name, String address, String phone, String email) {
         this.name = name;
+        this.id = id;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+    }
+
+    public RestaurantDTO(Long id, String name, String address, String phone, String email, List<FoodItemDTO> menu) {
+        this.name = name;
+        this.id = id;
+        this.menu = menu;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
     }
 
     public RestaurantDTO(Long id, String name) {
@@ -48,5 +67,29 @@ public class RestaurantDTO {
 
     public void setMenus(List<FoodItemDTO> menu) {
         this.menu = menu;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
