@@ -94,7 +94,7 @@ public class RestaurantIntegrationTests {
         for(long i = 1L; i<4L; i++) {
             String restaurantName = faker.restaurant().name();
             restaurantNames.add(restaurantName);
-            restaurantRepository.save(new Restaurant(i, restaurantName));
+            restaurantRepository.save(new Restaurant(i, restaurantName, faker.address().fullAddress(), faker.phoneNumber().cellPhone(), faker.internet().emailAddress()));
         }
 
         return restaurantNames;

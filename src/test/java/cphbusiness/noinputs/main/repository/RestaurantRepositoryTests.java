@@ -30,7 +30,7 @@ public class RestaurantRepositoryTests {
         for(long i = 1L; i<4L; i++) {
             String restaurantName = faker.restaurant().name();
             restaurantNames.add(restaurantName);
-            restaurantRepository.save(new Restaurant(i, restaurantName));
+            restaurantRepository.save(new Restaurant(i, restaurantName, faker.address().fullAddress(), faker.phoneNumber().cellPhone(), faker.internet().emailAddress()));
         }
 
         List<Restaurant> restaurants = restaurantRepository.findAll();
@@ -59,7 +59,7 @@ public class RestaurantRepositoryTests {
         List<FoodItem> menu = new ArrayList<>();
 
         // Creating a restaurant with the generated name and menu
-        restaurantRepository.save(new Restaurant(restaurantName));
+        restaurantRepository.save(new Restaurant(restaurantName, faker.address().fullAddress(), faker.phoneNumber().cellPhone(), faker.internet().emailAddress()));
         restaurantRepository.findById(1L).ifPresent(restaurant -> {
 
             // Adding food items to the menu
