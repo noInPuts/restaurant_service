@@ -2,15 +2,16 @@ package cphbusiness.noinputs.main.repository;
 
 import cphbusiness.noinputs.main.model.FoodItem;
 import cphbusiness.noinputs.main.model.Restaurant;
+import cphbusiness.noinputs.main.service.DataInitializerService;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,6 +22,9 @@ public class RestaurantRepositoryTests {
 
     @Autowired
     private RestaurantRepository restaurantRepository;
+
+    @MockBean
+    private DataInitializerService dataInitializerService;
 
     @Test
     public void findAll() {
@@ -63,9 +67,9 @@ public class RestaurantRepositoryTests {
         restaurantRepository.findById(1L).ifPresent(restaurant -> {
 
             // Adding food items to the menu
-            menu.add(new FoodItem(foodItemNameOne, priceOne, restaurant));
-            menu.add(new FoodItem(foodItemNameTwo, priceTwo, restaurant));
-            menu.add(new FoodItem(foodItemNameThree, priceThree, restaurant));
+            menu.add(new FoodItem(foodItemNameOne, priceOne, restaurant, 1L));
+            menu.add(new FoodItem(foodItemNameTwo, priceTwo, restaurant, 2L));
+            menu.add(new FoodItem(foodItemNameThree, priceThree, restaurant, 3L));
             restaurant.setMenu(menu);
 
             restaurantRepository.save(restaurant);
