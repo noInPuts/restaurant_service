@@ -1,21 +1,23 @@
 package cphbusiness.noinputs.main.dto;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Map;
+import java.util.List;
 
 public class OrderDTO {
 
-    @NotNull
+    @NotNull(message = "Restaurant id cannot be null")
     private Long restaurantId;
 
-    @NotNull
-    private Map<Integer, Long> foodItems;
+    @NotNull(message = "Food items cannot be null")
+    @NotEmpty(message = "Food items cannot be empty")
+    private List<OrderFoodItemDTO> foodItems;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(Long restaurantId, Map<Integer, Long> foodItems) {
+    public OrderDTO(Long restaurantId, List<OrderFoodItemDTO> foodItems) {
         this.restaurantId = restaurantId;
         this.foodItems = foodItems;
     }
@@ -28,11 +30,11 @@ public class OrderDTO {
         this.restaurantId = restaurantId;
     }
 
-    public Map<Integer, Long> getFoodItems() {
+    public List<OrderFoodItemDTO> getFoodItems() {
         return foodItems;
     }
 
-    public void setFoodItems(Map<Integer, Long> foodItems) {
+    public void setFoodItems(List<OrderFoodItemDTO> foodItems) {
         this.foodItems = foodItems;
     }
 }

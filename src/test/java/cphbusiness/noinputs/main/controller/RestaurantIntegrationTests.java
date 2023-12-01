@@ -3,11 +3,13 @@ package cphbusiness.noinputs.main.controller;
 import cphbusiness.noinputs.main.model.FoodItem;
 import cphbusiness.noinputs.main.model.Restaurant;
 import cphbusiness.noinputs.main.repository.RestaurantRepository;
+import cphbusiness.noinputs.main.service.DataInitializerService;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,6 +32,9 @@ public class RestaurantIntegrationTests {
 
     @Autowired
     private RestaurantRepository restaurantRepository;
+
+    @MockBean
+    private DataInitializerService dataInitializerService;
 
     @Test
     public void getAllRestaurants() throws Exception {
@@ -56,9 +61,9 @@ public class RestaurantIntegrationTests {
         restaurantRepository.findById(2L).ifPresent(
                 restaurant -> {
                     List<FoodItem> menu = new ArrayList<>();
-                    menu.add(new FoodItem(foodItemNames.get(0), foodPrices.get(0), restaurant));
-                    menu.add(new FoodItem(foodItemNames.get(1), foodPrices.get(1), restaurant));
-                    menu.add(new FoodItem(foodItemNames.get(2), foodPrices.get(2), restaurant));
+                    menu.add(new FoodItem(foodItemNames.get(0), foodPrices.get(0), restaurant, 1L));
+                    menu.add(new FoodItem(foodItemNames.get(1), foodPrices.get(1), restaurant, 2L));
+                    menu.add(new FoodItem(foodItemNames.get(2), foodPrices.get(2), restaurant, 3L));
                     restaurant.setMenu(menu);
 
                     restaurantRepository.save(restaurant);

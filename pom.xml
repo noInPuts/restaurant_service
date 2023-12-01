@@ -10,7 +10,7 @@
     </parent>
     <groupId>cphbusiness.noInPuts</groupId>
     <artifactId>restaurant_service</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <name>restaurant_service</name>
     <description>RestaurantService</description>
     <properties>
@@ -57,7 +57,6 @@
             <groupId>net.datafaker</groupId>
             <artifactId>datafaker</artifactId>
             <version>2.0.2</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

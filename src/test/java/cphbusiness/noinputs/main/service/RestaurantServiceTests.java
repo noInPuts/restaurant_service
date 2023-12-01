@@ -30,6 +30,9 @@ public class RestaurantServiceTests {
     @MockBean
     private RestaurantRepository restaurantRepository;
 
+    @MockBean
+    private DataInitializerService dataInitializerService;
+
     @Test
     public void getAllRestaurants() {
         Faker faker = new Faker();

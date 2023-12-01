@@ -1,7 +1,12 @@
 package cphbusiness.noinputs.main.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 public class FoodItemDTO {
+
+    @NotNull(message = "Food item id cannot be null")
     private Long id;
+
     private String name;
     private Long price;
 
