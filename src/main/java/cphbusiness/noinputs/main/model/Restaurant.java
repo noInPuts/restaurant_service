@@ -29,10 +29,6 @@ public class Restaurant {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant", fetch = FetchType.EAGER)
     private List<FoodItem> menu;
 
-    // TODO: Change to LAZY
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant", fetch = FetchType.EAGER)
-    private List<Order> orders;
-
     public Restaurant() {
     }
 
@@ -117,13 +113,5 @@ public class Restaurant {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 }
