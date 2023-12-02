@@ -20,3 +20,6 @@ jobs:
 
     - name: Running tests
       run: mvn clean test -q
+
+    - name: Running tests
+      run: mvn pmd:check
