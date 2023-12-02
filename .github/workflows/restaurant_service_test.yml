@@ -21,5 +21,5 @@ jobs:
     - name: Running tests
       run: mvn clean test -q
 
-    - name: Running tests
+    - name: Running pmd:check tests
       run: mvn pmd:check
