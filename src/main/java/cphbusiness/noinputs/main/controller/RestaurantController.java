@@ -2,7 +2,7 @@ package cphbusiness.noinputs.main.controller;
 
 import cphbusiness.noinputs.main.dto.RestaurantDTO;
 import cphbusiness.noinputs.main.exception.RestaurantNotFoundException;
-import cphbusiness.noinputs.main.service.RestaurantService;
+import cphbusiness.noinputs.main.facade.ServiceFacade;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,17 +15,17 @@ import java.util.List;
 @RestController
 public class RestaurantController {
 
-    private final RestaurantService restaurantService;
+    private final ServiceFacade serviceFacade;
 
     @Autowired
-    public RestaurantController(RestaurantService restaurantService) {
-        this.restaurantService = restaurantService;
+    public RestaurantController(ServiceFacade serviceFacade) {
+        this.serviceFacade = serviceFacade;
     }
 
     @GetMapping(value = "/restaurants", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<RestaurantDTO>> getAllRestaurants() {
-        List<RestaurantDTO> restaurantList = restaurantService.getAllRestaurants();
+        List<RestaurantDTO> restaurantList = serviceFacade.getAllRestaurants();
 
         return new ResponseEntity<>(restaurantList, HttpStatus.OK);
     }
@@ -35,7 +35,7 @@ public class RestaurantController {
     public ResponseEntity<RestaurantDTO> getRestaurant(@Valid @PathVariable Long id) {
         RestaurantDTO restaurant;
         try {
-            restaurant = restaurantService.getRestaurant(id);
+            restaurant = serviceFacade.getRestaurant(id);
         } catch(RestaurantNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

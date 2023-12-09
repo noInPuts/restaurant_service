@@ -3,7 +3,7 @@ package cphbusiness.noinputs.main.controller;
 import cphbusiness.noinputs.main.dto.FoodItemDTO;
 import cphbusiness.noinputs.main.dto.RestaurantDTO;
 import cphbusiness.noinputs.main.exception.RestaurantNotFoundException;
-import cphbusiness.noinputs.main.service.RestaurantService;
+import cphbusiness.noinputs.main.facade.ServiceFacade;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class RestaurantControllerTests {
     private MockMvc mockMvc;
 
     @MockBean
-    private RestaurantService restaurantService;
+    private ServiceFacade serviceFacade;
 
     @Test
     public void testGetAllRestaurants() throws Exception {
@@ -40,14 +40,13 @@ public class RestaurantControllerTests {
         restaurantDTOList.add(new RestaurantDTO(2L,faker.restaurant().name()));
         restaurantDTOList.add(new RestaurantDTO(3L,faker.restaurant().name()));
 
-        when(restaurantService.getAllRestaurants()).thenReturn(restaurantDTOList);
+        when(serviceFacade.getAllRestaurants()).thenReturn(restaurantDTOList);
 
         this.mockMvc.perform(get("/restaurants").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("[{\"name\":\""+ restaurantDTOList.get(0).getName() +"\"},{\"name\":\""+ restaurantDTOList.get(1).getName() +"\"},{\"name\":\""+ restaurantDTOList.get(2).getName() +"\"}]"));
     }
 
-    // TODO: Get menu aswell
     @Test
     public void getRestaurant() throws Exception {
         // Using datafaker to generate random data
@@ -70,7 +69,7 @@ public class RestaurantControllerTests {
         RestaurantDTO restaurantDTO = new RestaurantDTO(2L,faker.restaurant().name(), foodItems);
 
         // Mocking the restaurantService
-        when(restaurantService.getRestaurant(2L)).thenReturn(restaurantDTO);
+        when(serviceFacade.getRestaurant(2L)).thenReturn(restaurantDTO);
 
         // Testing the getRestaurant method
         this.mockMvc.perform(get("/restaurants/2").accept(MediaType.APPLICATION_JSON))
@@ -81,7 +80,7 @@ public class RestaurantControllerTests {
 
     @Test
     public void getRestaurantNotFoundShouldReturn404() throws Exception {
-        when(restaurantService.getRestaurant(2732L)).thenThrow(RestaurantNotFoundException.class);
+        when(serviceFacade.getRestaurant(2732L)).thenThrow(RestaurantNotFoundException.class);
 
         this.mockMvc.perform(get("/restaurants/2732").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
