@@ -1,10 +1,12 @@
-package cphbusiness.noinputs.main.service;
+package cphbusiness.noinputs.main.unit.service;
 
 import cphbusiness.noinputs.main.dto.RestaurantDTO;
 import cphbusiness.noinputs.main.exception.RestaurantNotFoundException;
 import cphbusiness.noinputs.main.model.FoodItem;
 import cphbusiness.noinputs.main.model.Restaurant;
 import cphbusiness.noinputs.main.repository.RestaurantRepository;
+import cphbusiness.noinputs.main.service.DataInitializerService;
+import cphbusiness.noinputs.main.service.RestaurantService;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

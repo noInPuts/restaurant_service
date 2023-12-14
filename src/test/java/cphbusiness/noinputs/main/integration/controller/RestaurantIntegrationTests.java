@@ -1,4 +1,4 @@
-package cphbusiness.noinputs.main.controller;
+package cphbusiness.noinputs.main.integration.controller;
 
 import cphbusiness.noinputs.main.model.FoodItem;
 import cphbusiness.noinputs.main.model.Restaurant;

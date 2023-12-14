@@ -1,7 +1,8 @@
-package cphbusiness.noinputs.main.repository;
+package cphbusiness.noinputs.main.unit.repository;
 
 import cphbusiness.noinputs.main.model.FoodItem;
 import cphbusiness.noinputs.main.model.Restaurant;
+import cphbusiness.noinputs.main.repository.RestaurantRepository;
 import cphbusiness.noinputs.main.service.DataInitializerService;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
