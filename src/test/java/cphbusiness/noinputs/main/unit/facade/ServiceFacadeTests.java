@@ -1,7 +1,8 @@
-package cphbusiness.noinputs.main.facade;
+package cphbusiness.noinputs.main.unit.facade;
 
 import cphbusiness.noinputs.main.dto.RestaurantDTO;
 import cphbusiness.noinputs.main.exception.RestaurantNotFoundException;
+import cphbusiness.noinputs.main.facade.ServiceFacade;
 import cphbusiness.noinputs.main.service.RestaurantService;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;

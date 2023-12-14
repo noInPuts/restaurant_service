@@ -1,5 +1,6 @@
-package cphbusiness.noinputs.main.controller;
+package cphbusiness.noinputs.main.unit.controller;
 
+import cphbusiness.noinputs.main.controller.RestaurantController;
 import cphbusiness.noinputs.main.dto.FoodItemDTO;
 import cphbusiness.noinputs.main.dto.RestaurantDTO;
 import cphbusiness.noinputs.main.exception.RestaurantNotFoundException;
