@@ -28,6 +28,7 @@ public class ServiceFacadeTests {
 
     @Test
     public void getAllRestaurantsTest() {
+        // Arrange
         // Mocking restaurantService
         Faker faker = new Faker();
         List<RestaurantDTO> mockedRestaurants = new ArrayList<>();
@@ -36,9 +37,11 @@ public class ServiceFacadeTests {
         mockedRestaurants.add(new RestaurantDTO(3L, faker.restaurant().name(), faker.address().fullAddress(), faker.phoneNumber().cellPhone(), faker.internet().emailAddress()));
         when(restaurantService.getAllRestaurants()).thenReturn(mockedRestaurants);
 
+        // Act
         // Getting all the restaurants
         List<RestaurantDTO> restaurants = serviceFacade.getAllRestaurants();
 
+        // Assert
         // Asserting that the list is not empty
         assertFalse(restaurants.isEmpty());
         assertEquals(3, restaurants.size());
@@ -49,14 +52,17 @@ public class ServiceFacadeTests {
 
     @Test
     public void getRestaurantTest() throws RestaurantNotFoundException {
+        // Arrange
         // Mocking restaurantService
         Faker faker = new Faker();
         RestaurantDTO mockedRestaurant = new RestaurantDTO(1L, faker.restaurant().name(), faker.address().fullAddress(), faker.phoneNumber().cellPhone(), faker.internet().emailAddress());
         when(restaurantService.getRestaurant(1L)).thenReturn(mockedRestaurant);
 
+        // Act
         // Getting the restaurant
         RestaurantDTO restaurant = serviceFacade.getRestaurant(1L);
 
+        // Assert
         // Asserting that the restaurant is not null
         assertEquals(mockedRestaurant.getName(), restaurant.getName());
     }

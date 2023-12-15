@@ -37,6 +37,7 @@ public class RestaurantServiceTests {
 
     @Test
     public void getAllRestaurants() {
+        // Arrange
         Faker faker = new Faker();
         List<String> restaurantNames = new ArrayList<>();
 
@@ -51,8 +52,11 @@ public class RestaurantServiceTests {
                         new Restaurant(3L, restaurantNames.get(2))
                 )
         );
+
+        // Act
         List<RestaurantDTO> restaurants = restaurantService.getAllRestaurants();
 
+        // Assert
         assertEquals(3, restaurants.size());
         assertEquals(restaurantNames.get(0), restaurants.get(0).getName());
         assertEquals(restaurantNames.get(1), restaurants.get(1).getName());
@@ -61,6 +65,7 @@ public class RestaurantServiceTests {
 
     @Test
     public void getRestaurant() throws RestaurantNotFoundException {
+        // Arrange
         // Using datafaker to generate random data
         Faker faker = new Faker();
 
@@ -76,9 +81,11 @@ public class RestaurantServiceTests {
                 java.util.Optional.of(new Restaurant(2L, restaurantName, foodItems))
         );
 
+        // Act
         // Getting restaurant from service
         RestaurantDTO restaurant = restaurantService.getRestaurant(2L);
 
+        // Assert
         assertEquals(restaurantName, restaurant.getName());
         assertEquals(1, restaurant.getMenu().size());
         assertEquals(foodItems.get(0).getName(), restaurant.getMenu().get(0).getName());
@@ -87,6 +94,7 @@ public class RestaurantServiceTests {
 
     @Test
     public void getRestaurantNotFoundShouldThrowException() {
+        // Arrange
         when(restaurantRepository.findById(2732L)).thenReturn(
                 java.util.Optional.empty()
         );
@@ -95,6 +103,7 @@ public class RestaurantServiceTests {
             restaurantService.getRestaurant(2732L);
         });
 
+        // Act and Assert
         try {
             restaurantService.getRestaurant(2732L);
         } catch (RestaurantNotFoundException e) {
