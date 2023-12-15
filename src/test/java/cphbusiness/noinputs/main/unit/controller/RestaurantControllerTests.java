@@ -35,14 +35,15 @@ public class RestaurantControllerTests {
 
     @Test
     public void testGetAllRestaurants() throws Exception {
+        // Arrange
         Faker faker = new Faker();
         List<RestaurantDTO> restaurantDTOList = new ArrayList<>();
         restaurantDTOList.add(new RestaurantDTO(1L, faker.restaurant().name()));
         restaurantDTOList.add(new RestaurantDTO(2L,faker.restaurant().name()));
         restaurantDTOList.add(new RestaurantDTO(3L,faker.restaurant().name()));
-
         when(serviceFacade.getAllRestaurants()).thenReturn(restaurantDTOList);
 
+        // Act and Assert
         this.mockMvc.perform(get("/restaurants").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("[{\"name\":\""+ restaurantDTOList.get(0).getName() +"\"},{\"name\":\""+ restaurantDTOList.get(1).getName() +"\"},{\"name\":\""+ restaurantDTOList.get(2).getName() +"\"}]"));
@@ -50,6 +51,7 @@ public class RestaurantControllerTests {
 
     @Test
     public void getRestaurant() throws Exception {
+        // Arrange
         // Using datafaker to generate random data
         Faker faker = new Faker();
 
@@ -72,6 +74,7 @@ public class RestaurantControllerTests {
         // Mocking the restaurantService
         when(serviceFacade.getRestaurant(2L)).thenReturn(restaurantDTO);
 
+        // Act and Assert
         // Testing the getRestaurant method
         this.mockMvc.perform(get("/restaurants/2").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -81,14 +84,17 @@ public class RestaurantControllerTests {
 
     @Test
     public void getRestaurantNotFoundShouldReturn404() throws Exception {
+        // Arrange
         when(serviceFacade.getRestaurant(2732L)).thenThrow(RestaurantNotFoundException.class);
 
+        // Act and Assert
         this.mockMvc.perform(get("/restaurants/2732").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void getRestaurantBadRequestShouldReturn400() throws Exception {
+        // Act and assert
         this.mockMvc.perform(get("/restaurants/a").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }

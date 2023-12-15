@@ -29,6 +29,7 @@ public class RestaurantRepositoryTests {
 
     @Test
     public void findAll() {
+        // Arrange
         Faker faker = new Faker();
         List<String> restaurantNames = new ArrayList<>();
 
@@ -38,8 +39,10 @@ public class RestaurantRepositoryTests {
             restaurantRepository.save(new Restaurant(i, restaurantName, faker.address().fullAddress(), faker.phoneNumber().cellPhone(), faker.internet().emailAddress()));
         }
 
+        // Act
         List<Restaurant> restaurants = restaurantRepository.findAll();
 
+        // Assert
         assertEquals(3, restaurants.size());
         for(String restaurantName : restaurantNames) {
             assertTrue(restaurants.stream().anyMatch(restaurant -> restaurant.getName().equals(restaurantName)));
@@ -48,6 +51,7 @@ public class RestaurantRepositoryTests {
 
     @Test
     public void findById() {
+        // Arrange
         // Using datafaker to generate random data
         Faker faker = new Faker();
 
@@ -76,9 +80,11 @@ public class RestaurantRepositoryTests {
             restaurantRepository.save(restaurant);
         });
 
+        // Act
         // Getting the restaurant from the database
         Restaurant restaurant = restaurantRepository.findById(1L).orElse(null);
 
+        // Assert
         assertNotNull(restaurant);
         assertEquals(restaurantName, restaurant.getName());
         assertEquals(menu.size(), restaurant.getMenu().size());
