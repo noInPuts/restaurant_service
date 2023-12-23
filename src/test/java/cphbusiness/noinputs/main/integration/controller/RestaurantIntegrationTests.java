@@ -40,7 +40,7 @@ public class RestaurantIntegrationTests {
     public void getAllRestaurants() throws Exception {
         List<String> restaurantNames = persistDummyRestaurants();
 
-        this.mockMvc.perform(get("/restaurants").accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get("/api/restaurant/restaurants").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("[{\"name\":\""+ restaurantNames.get(0) +"\"},{\"name\":\""+ restaurantNames.get(1) +"\"},{\"name\":\""+ restaurantNames.get(2) +"\"}]"));
     }
@@ -70,7 +70,7 @@ public class RestaurantIntegrationTests {
                 }
         );
 
-        this.mockMvc.perform(get("/restaurants/2").accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get("/api/restaurant/restaurants/2").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"name\":\""+ restaurantNames.get(1) +"\", \"menu\": [" +
                         "{\"name\": \""+ foodItemNames.get(0) +"\", \"price\": "+ foodPrices.get(0) +"}," +
@@ -80,13 +80,13 @@ public class RestaurantIntegrationTests {
 
     @Test
     public void getRestaurantNotFoundShouldReturn404() throws Exception {
-        this.mockMvc.perform(get("/restaurants/2").accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get("/api/restaurant/restaurants/2").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void getRestaurantBadRequestShouldReturn400() throws Exception {
-        this.mockMvc.perform(get("/restaurants/abc").accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get("/api/restaurant/restaurants/abc").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
 

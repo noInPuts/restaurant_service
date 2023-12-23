@@ -13,6 +13,7 @@ import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:3000", "http://167.71.45.53:3000"}, maxAge = 3600, allowCredentials = "true")
 @RestController
+@RequestMapping("/api/restaurant")
 public class RestaurantController {
 
     private final ServiceFacade serviceFacade;

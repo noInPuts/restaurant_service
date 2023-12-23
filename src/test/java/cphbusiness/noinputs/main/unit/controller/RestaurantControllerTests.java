@@ -44,7 +44,7 @@ public class RestaurantControllerTests {
         when(serviceFacade.getAllRestaurants()).thenReturn(restaurantDTOList);
 
         // Act and Assert
-        this.mockMvc.perform(get("/restaurants").accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get("/api/restaurant/restaurants").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("[{\"name\":\""+ restaurantDTOList.get(0).getName() +"\"},{\"name\":\""+ restaurantDTOList.get(1).getName() +"\"},{\"name\":\""+ restaurantDTOList.get(2).getName() +"\"}]"));
     }
@@ -76,7 +76,7 @@ public class RestaurantControllerTests {
 
         // Act and Assert
         // Testing the getRestaurant method
-        this.mockMvc.perform(get("/restaurants/2").accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get("/api/restaurant/restaurants/2").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\"name\":\""+ restaurantDTO.getName() +"\"}"))
                 .andExpect(content().json("{\"menu\": [{ \"name\": \""+ foodItemNameOne +"\", \"price\": "+ priceOne + " }, {\"name\": \""+ foodItemNameTwo +"\", \"price\": "+ priceTwo + " }] }"));
@@ -88,14 +88,14 @@ public class RestaurantControllerTests {
         when(serviceFacade.getRestaurant(2732L)).thenThrow(RestaurantNotFoundException.class);
 
         // Act and Assert
-        this.mockMvc.perform(get("/restaurants/2732").accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get("/api/restaurant/restaurants/2732").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void getRestaurantBadRequestShouldReturn400() throws Exception {
         // Act and assert
-        this.mockMvc.perform(get("/restaurants/a").accept(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get("/api/restaurant/restaurants/a").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
 
