@@ -18,3 +18,5 @@ WORKDIR /usr/src/app
 
 # Copy the JAR file from the build image to this image
 COPY --from=build /usr/src/app/target/restaurant_service.jar .
+
+CMD ["java", "-jar", "restaurant_service.jar"]
