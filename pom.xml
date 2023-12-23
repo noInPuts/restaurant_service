@@ -10,7 +10,7 @@
     </parent>
     <groupId>cphbusiness.noInPuts</groupId>
     <artifactId>restaurant_service</artifactId>
-    <version>0.0.6</version>
+    <version>0.0.7</version>
     <name>restaurant_service</name>
     <description>RestaurantService</description>
     <properties>
