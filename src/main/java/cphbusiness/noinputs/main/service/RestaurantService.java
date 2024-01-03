@@ -8,4 +8,5 @@ import java.util.List;
 public interface RestaurantService {
     List<RestaurantDTO> getAllRestaurants();
     RestaurantDTO getRestaurant(Long id) throws RestaurantNotFoundException;
+    RestaurantDTO createRestaurant(RestaurantDTO restaurantDTO);
 }

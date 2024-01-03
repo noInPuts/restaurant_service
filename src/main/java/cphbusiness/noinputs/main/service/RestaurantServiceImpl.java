@@ -23,7 +23,6 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     public List<RestaurantDTO> getAllRestaurants() {
-        // TODO: Limit this? (Maybe 20 per page)
         List<Restaurant> restaurantsEntities = restaurantRepository.findAll();
         List<RestaurantDTO> restaurantsDTOs = new ArrayList<>();
 
@@ -44,5 +43,11 @@ public class RestaurantServiceImpl implements RestaurantService {
         }
 
         return new RestaurantDTO(restaurant.getId(), restaurant.getName(), restaurant.getAddress(), restaurant.getPhone(), restaurant.getEmail() , menu);
+    }
+
+    @Override
+    public RestaurantDTO createRestaurant(RestaurantDTO restaurantDTO) {
+        Restaurant restaurant = restaurantRepository.save(new Restaurant(restaurantDTO.getName(), restaurantDTO.getAddress(), restaurantDTO.getPhone(), restaurantDTO.getEmail()));
+        return new RestaurantDTO(restaurant.getId(), restaurant.getName(), restaurant.getAddress(), restaurant.getPhone(), restaurant.getEmail());
     }
 }

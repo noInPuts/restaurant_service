@@ -1,6 +1,7 @@
 package cphbusiness.noinputs.main.controller;
 
 import cphbusiness.noinputs.main.dto.RestaurantDTO;
+import cphbusiness.noinputs.main.exception.NotAuthorizedException;
 import cphbusiness.noinputs.main.exception.RestaurantNotFoundException;
 import cphbusiness.noinputs.main.facade.ServiceFacade;
 import jakarta.validation.Valid;
@@ -42,5 +43,18 @@ public class RestaurantController {
         }
 
         return new ResponseEntity<>(restaurant, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/restaurants", produces = "application/json", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<RestaurantDTO> createRestaurant(@Valid @CookieValue("jwt-token") String jwtToken, @RequestBody RestaurantDTO restaurantDTO) {
+        RestaurantDTO restaurant = null;
+        try {
+            restaurant = serviceFacade.createRestaurant(jwtToken, restaurantDTO);
+        } catch (NotAuthorizedException e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 }

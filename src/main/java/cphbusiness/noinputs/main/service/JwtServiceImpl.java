@@ -21,4 +21,12 @@ public class JwtServiceImpl implements JwtService {
 
         return Long.parseLong(jwtTokenParsed.getHeader().get("id").toString());
     }
+
+    public boolean validateAdminAccount(String jwtToken) {
+        SecretKey key = Keys.hmacShaKeyFor(pKey.getBytes());
+        Jws<Claims> jwtTokenParsed;
+        jwtTokenParsed = Jwts.parser().verifyWith(key).build().parseSignedClaims(jwtToken);
+
+        return jwtTokenParsed.getHeader().get("role") == "admin";
+    }
 }
