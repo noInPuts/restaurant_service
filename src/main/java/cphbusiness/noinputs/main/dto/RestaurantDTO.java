@@ -34,6 +34,10 @@ public class RestaurantDTO {
         this.email = email;
     }
 
+    public RestaurantDTO(String name) {
+        this.name = name;
+    }
+
     public RestaurantDTO(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -42,6 +46,10 @@ public class RestaurantDTO {
     public RestaurantDTO(Long id, String name, List<FoodItemDTO> menu) {
         this.id = id;
         this.name = name;
+        this.menu = menu;
+    }
+
+    public void setMenu(List<FoodItemDTO> menu) {
         this.menu = menu;
     }
 

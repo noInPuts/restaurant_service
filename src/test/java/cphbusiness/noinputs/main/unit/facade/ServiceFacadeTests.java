@@ -1,8 +1,10 @@
 package cphbusiness.noinputs.main.unit.facade;
 
 import cphbusiness.noinputs.main.dto.RestaurantDTO;
+import cphbusiness.noinputs.main.exception.NotAuthorizedException;
 import cphbusiness.noinputs.main.exception.RestaurantNotFoundException;
 import cphbusiness.noinputs.main.facade.ServiceFacade;
+import cphbusiness.noinputs.main.service.JwtService;
 import cphbusiness.noinputs.main.service.RestaurantService;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
@@ -13,8 +15,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -25,6 +27,9 @@ public class ServiceFacadeTests {
 
     @MockBean
     private RestaurantService restaurantService;
+
+    @MockBean
+    private JwtService jwtService;
 
     @Test
     public void getAllRestaurantsTest() {
@@ -65,5 +70,37 @@ public class ServiceFacadeTests {
         // Assert
         // Asserting that the restaurant is not null
         assertEquals(mockedRestaurant.getName(), restaurant.getName());
+    }
+
+    @Test
+    public void createRestaurantTest() throws NotAuthorizedException {
+        // Arrange
+        // Mocking restaurantService
+        Faker faker = new Faker();
+        RestaurantDTO mockedRestaurant = new RestaurantDTO(1L, faker.restaurant().name(), faker.address().fullAddress(), faker.phoneNumber().cellPhone(), faker.internet().emailAddress());
+        when(restaurantService.createRestaurant(mockedRestaurant)).thenReturn(mockedRestaurant);
+        when(jwtService.validateAdminAccount(any(String.class))).thenReturn(true);
+
+        // Act
+        // Creating the restaurant
+        RestaurantDTO restaurant = serviceFacade.createRestaurant("dummyToken", mockedRestaurant);
+
+        // Assert
+        // Asserting that the restaurant is not null
+        assertEquals(mockedRestaurant.getName(), restaurant.getName());
+    }
+
+    @Test
+    public void createRestaurantShouldThrowNotAuthorizedException() throws NotAuthorizedException {
+        // Arrange
+        // Mocking restaurantService
+        Faker faker = new Faker();
+        RestaurantDTO mockedRestaurant = new RestaurantDTO(1L, faker.restaurant().name(), faker.address().fullAddress(), faker.phoneNumber().cellPhone(), faker.internet().emailAddress());
+        when(restaurantService.createRestaurant(mockedRestaurant)).thenReturn(mockedRestaurant);
+        when(jwtService.validateAdminAccount(any(String.class))).thenReturn(false);
+
+        // Act and Assert
+        // Creating the restaurant
+        assertThrows(NotAuthorizedException.class, () -> serviceFacade.createRestaurant("dummyToken", mockedRestaurant));
     }
 }

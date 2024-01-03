@@ -20,6 +20,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -109,5 +110,19 @@ public class RestaurantServiceTests {
         } catch (RestaurantNotFoundException e) {
             assertEquals("Restaurant with id 2732 not found", e.getMessage());
         }
+    }
+
+    @Test
+    public void createRestaurantTest() {
+        // Arrange
+        Faker faker = new Faker();
+        RestaurantDTO restaurantDTO = new RestaurantDTO(1L, faker.restaurant().name(), null);
+        when(restaurantRepository.save(any(Restaurant.class))).thenReturn(new Restaurant(1L, restaurantDTO.getName(), null));
+
+        // Act
+        RestaurantDTO createdRestaurantDTO = restaurantService.createRestaurant(restaurantDTO);
+
+        // Assert
+        assertEquals(restaurantDTO.getName(), createdRestaurantDTO.getName());
     }
 }

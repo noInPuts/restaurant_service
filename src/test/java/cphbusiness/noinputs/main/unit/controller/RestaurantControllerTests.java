@@ -5,6 +5,7 @@ import cphbusiness.noinputs.main.dto.FoodItemDTO;
 import cphbusiness.noinputs.main.dto.RestaurantDTO;
 import cphbusiness.noinputs.main.exception.RestaurantNotFoundException;
 import cphbusiness.noinputs.main.facade.ServiceFacade;
+import jakarta.servlet.http.Cookie;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -99,4 +102,21 @@ public class RestaurantControllerTests {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void createRestaurantTest() throws Exception {
+        // Arrange
+        Faker faker = new Faker();
+        RestaurantDTO restaurantDTO = new RestaurantDTO(faker.restaurant().name());
+        when(serviceFacade.createRestaurant(any(String.class), any(RestaurantDTO.class))).thenReturn(restaurantDTO);
+        Cookie cookie = new Cookie("jwt-token", "dummyToken");
+
+        // Act and Assert
+        this.mockMvc.perform(post("/api/restaurant/restaurants")
+                        .cookie(cookie)
+                        .content("{\"name\":\""+ restaurantDTO.getName() +"\"}")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().json("{\"name\":\""+ restaurantDTO.getName() +"\"}"));
+    }
 }
