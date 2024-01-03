@@ -47,7 +47,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public RestaurantDTO createRestaurant(RestaurantDTO restaurantDTO) {
-        Restaurant restaurant = restaurantRepository.save(new Restaurant(restaurantDTO.getName(), restaurantDTO.getAddress(), restaurantDTO.getPhone(), restaurantDTO.getEmail()));
+        Restaurant restaurant = restaurantRepository.save(new Restaurant(restaurantDTO.getName(), "none", restaurantDTO.getPhone(), restaurantDTO.getEmail()));
         return new RestaurantDTO(restaurant.getId(), restaurant.getName(), restaurant.getAddress(), restaurant.getPhone(), restaurant.getEmail());
     }
 }
