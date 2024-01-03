@@ -52,9 +52,10 @@ public class RestaurantController {
         try {
             restaurant = serviceFacade.createRestaurant(jwtToken, restaurantDTO);
         } catch (NotAuthorizedException e) {
+            System.out.println(e.getMessage());
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-
+        System.out.println("Restaurant Created");
         return new ResponseEntity<>(restaurant, HttpStatus.CREATED);
     }
 }

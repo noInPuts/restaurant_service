@@ -26,7 +26,6 @@ public class JwtServiceImpl implements JwtService {
         SecretKey key = Keys.hmacShaKeyFor(pKey.getBytes());
         Jws<Claims> jwtTokenParsed;
         jwtTokenParsed = Jwts.parser().verifyWith(key).build().parseSignedClaims(jwtToken);
-
-        return jwtTokenParsed.getHeader().get("role") == "admin";
+        return jwtTokenParsed.getHeader().get("role").toString().equals("admin");
     }
 }
